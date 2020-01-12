@@ -1,0 +1,126 @@
+﻿@using  Microsoft.AspNetCore.Http
+@using GraniteHouse.Extensions
+@using GraniteHouse.Utility
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GraniteHouse</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/jquery-ui.css" />
+        <link rel="stylesheet" href="~/css/jquery.timepicker.css" />
+        <script src="https://kit.fontawesome.com/7edc993f8b.js" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/jquery-ui.css" />
+        <link rel="stylesheet" href="~/css/jquery.timepicker.css" />
+        <script src="https://kit.fontawesome.com/7edc993f8b.js" crossorigin="anonymous"></script>
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <a class="navbar-brand mr-5" href="#">GraniteHouse</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto ">
+                <li class="nav-item mr-3"><a asp-area="Customer" asp-controller="Home" asp-action="Index" class="text-white">Home</a></li>
+
+
+                @if (User.IsInRole(SD.SuperAdminEndUser))
+                {
+                    <li class="nav-item mr-3"><a asp-area="Admin" asp-controller="ProductTypes" asp-action="Index" class="text-white">Product Types</a></li>
+                    <li class="nav-item mr-3"><a asp-area="Admin" asp-controller="SpecialTags" asp-action="Index" class="text-white">Special Tags</a></li>
+                    <li class="nav-item mr-3"><a asp-area="Admin" asp-controller="Products" asp-action="Index" class="text-white">Products</a></li>
+                    <li class="nav-item mr-3"><a asp-area="Admin" asp-controller="AdminUsers" asp-action="Index" class="text-white">Admin Users</a></li>
+
+                }
+
+                @if (User.IsInRole(SD.SuperAdminEndUser) || User.IsInRole(SD.AdminEndUser))
+                {
+                    <li class="nav-item mr-3"><a asp-area="Admin" asp-controller="Appointments" asp-action="Index" class="text-white">Appointments</a></li>
+                }
+
+                @if (HttpContextAccessor.HttpContext.Session.Get<List<int>>("ssShoppingCart") != null)
+                {
+                    <li style="color:white">
+                        <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" class="navbar-link text-white">
+                            <i class="fas fa-cart"> </i> &nbsp;
+                            @{
+                                var count = HttpContextAccessor.HttpContext.Session.Get<List<int>>("ssShoppingCart").Count;
+                            }
+                            (@count)
+                        </a>
+                    </li>
+                }
+                else
+                {
+
+                    <li style="color:white">
+                        <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" class="navbar-link text-white">
+
+                            <i class="glyphicon glyphicon-shopping-cart"> </i> &nbsp;  (0)
+                        </a>
+                    </li>
+
+                }
+
+
+                </ul>
+            <partial name="_LoginPartial" />
+        </div>
+    </nav>
+
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2019 - GraniteHouse</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/jquery-ui.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.timepicker.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/jquery-ui.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.timepicker.js" asp-append-version="true"></script>
+
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

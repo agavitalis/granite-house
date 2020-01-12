@@ -1,0 +1,57 @@
+﻿@model List<GraniteHouse.Models.Products>
+
+@if (Model.Count > 0)
+{
+
+  <table class="table table-striped" width="100%">
+        <tr class="table-info">
+            <th style="text-align:center">
+
+            </th>
+            <th style="text-align:center" width:20%>
+                <label asp-for="@Model.FirstOrDefault().Name"></label>
+            </th>
+            <th style="text-align:center">
+                <label asp-for="@Model.FirstOrDefault().Price"></label>
+            </th>
+            <th style="text-align:center">
+                <label asp-for="@Model.FirstOrDefault().ShadeColor"></label>
+            </th>
+            <th style="text-align:center">
+                <label asp-for="@Model.FirstOrDefault().ProductTypes.Name"></label>
+            </th>
+
+
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr style="padding:50px">
+                <td>
+                    <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
+                        <img src="@item.Image" width="250" style="margin:auto; display:block; border-radius:5px solid #bbb9b9; " />
+                    </a>
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(c => item.Name)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(c => item.Price)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(c => item.ShadeColor)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(c => item.ProductTypes.Name)
+                </td>
+                <td style="text-align:center">
+                    <button type="submit" class="btn btn-danger" asp-action="Remove" asp-route-id="@item.Id">Remove</button>
+                </td>
+            </tr>
+        }
+    </table>
+
+}
+else
+{
+    <div>No item added to Shopping Cart.. </div> 
+}

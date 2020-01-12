@@ -1,0 +1,145 @@
+﻿@model GraniteHouse.Models.ViewModels.AppointmentViewModel
+
+<form>
+    <br /><br />
+    <h3 class="text-info">
+        Appointment List
+    </h3><br />
+
+    <div style="height:150px; background-color:aliceblue" class="container">
+        <div class="col-md-12">
+            <div class="row" style="padding-top:10px">
+
+                <div class="col-sm-2">
+                    Customer Name
+                </div>
+                <div class="col-sm-4">
+                    @Html.Editor("searchName", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+
+
+                <div class="col-sm-2">
+                    Email
+                </div>
+                <div class="col-sm-4">
+                    @Html.Editor("searchEmail", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+
+
+            </div>
+            <div class="row" style="padding-top:10px">
+                <div class="col-sm-2">
+                    Phone Number
+                </div>
+                <div class="col-sm-4">
+                    @Html.Editor("searchPhone", new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+
+                <div class="col-sm-2">
+                    Appointment Date
+                </div>
+                <div class="col-sm-4">
+                    @Html.Editor("searchDate", new { htmlAttributes = new { @class = "form-control", @id = "datepicker" } })
+                </div>
+
+            </div>
+            <div class="row" style="padding-top:10px">
+                <div class="col-sm-2">
+
+                </div>
+                <div class="col-sm-4">
+
+                </div>
+
+                <div class="col-sm-2">
+
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit" name="submit" value="Search" class="btn btn-primary form-control">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <br /><br />
+
+    <div>
+        <table class="table table-striped border">
+            <tr class="table-info">
+                <th>
+                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().SalesPerson.Name)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().AppointmentDate)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().CustomerName)
+
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().CustomerPhoneNumber)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().CustomerEmail)
+
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().isConfirmed)
+
+                </th>
+                <th></th>
+                <th></th>
+
+            </tr>
+            @foreach (var item in Model.Appointments)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.SalesPerson.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(m => item.AppointmentDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.CustomerPhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.CustomerEmail)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.isConfirmed)
+                    </td>
+                    <td>
+                        <partial name="_TableButtonPartial" model="item.Id" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</form>
+
+@section Scripts{
+
+    <script>
+       
+
+        $(function () {
+            $("#datepicker").datepicker({ minDate: +1, maxDate:"+3M" });
+        });
+
+    </script>
+}

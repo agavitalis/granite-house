@@ -1,0 +1,98 @@
+﻿@model GraniteHouse.Models.ViewModels.ProductViewModel
+@using GraniteHouse.Extensions
+@{
+    ViewData["Title"] = "Create";
+}
+
+<br />
+<h2 class="text-info"> Create Product</h2>
+
+<form asp-action="Create" enctype="multipart/form-data" method="post">
+   
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+       
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Products.Name"></label>
+            </div>
+            <div class="col-md-5">
+                <input class="form-control" asp-for="Products.Name" />
+                <span asp-validation-for="Products.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Products.Price"></label>
+            </div>
+            <div class="col-md-5">
+                <input class="form-control" asp-for="Products.Price" />
+                <span asp-validation-for="Products.Price" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Products.Image"></label>
+            </div>
+            <div class="col-md-5">
+                <input class="form-control" type="file" name="files" />
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="ProductTypes"></label>
+            </div>
+            <div class="col-md-5">
+                <select asp-for="@Model.Products.ProductTypeId" asp-items="Model.ProductTypes.ToSelectListItem(Model.Products.ProductTypeId)" class="form-control"></select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="SpecialTags"></label>
+            </div>
+            <div class="col-md-5">
+                <select asp-for="@Model.Products.SpecialTagsId" asp-items="Model.SpecialTags.ToSelectListItem(Model.Products.SpecialTagsId)" class="form-control"></select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Products.ShadeColor"></label>
+            </div>
+            <div class="col-md-5">
+                <input class="form-control" asp-for="Products.ShadeColor" />
+                <span asp-validation-for="Products.ShadeColor" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Products.Avaliable"></label>
+            </div>
+            <div class="col-md-5">
+                <input type="checkbox" asp-for="Products.Avaliable" />
+
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a asp-action="Index" class="btn btn-success">Back to List</a>
+        </div>
+
+   
+
+
+</form>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
